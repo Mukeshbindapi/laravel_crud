@@ -9,7 +9,7 @@ Route::get('/', function () {
 });
 
 Route::get('register',[RegisterController::class,'register']);
-Route::get('user/register',[RegisterController::class,'store']);
+Route::post('user/register',[RegisterController::class,'store']);
 
 Route::prefix('user')->group(function(){
     Route::get('store',[UserController::class,'store']);

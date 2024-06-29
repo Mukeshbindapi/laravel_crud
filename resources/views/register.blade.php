@@ -16,7 +16,8 @@
                     <h4>Register Form</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('user/register') }}">
+                    <form action="{{ url('user/register') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
