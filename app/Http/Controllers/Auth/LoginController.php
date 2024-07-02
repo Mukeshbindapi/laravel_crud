@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -12,13 +13,14 @@ class LoginController extends Controller
     public function login(Request $request){
         $email = $request->email;
         $password = $request->password;
-        $users = User::where('email',$email)->first();
+        $user = User::where('email',$email)->first();
 
-        if($users){
+        if($user){
 
-            $hashedPassword = $users->password;
+            $hashedPassword = $user->password;
             if(Hash::check($password,$hashedPassword)){
-                dd('Login Successfully.');
+                Auth::login($user);
+                return redirect('user/list');
             }else{
                 dd('Password Not Match');
             }
