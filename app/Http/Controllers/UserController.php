@@ -11,10 +11,15 @@ class UserController extends Controller
 
     public function index(){
         $user = Auth::user();
-        // dd($user);
-        $users = User::all();
-        // dd($user->toArray());
-        return view('user_list',compact('users'));
+        if($user){
+            // dd($user);
+            $users = User::all();
+            // dd($user->toArray());
+            return view('user_list',compact('users'));
+        }else{
+            return redirect('/');
+        }
+
     }
 
     public function store(){
@@ -51,7 +56,11 @@ class UserController extends Controller
     }
 
     public function show($id){
-        $user = User::where('id',$id)->first();
-        dd($user->toArray());
+        if(Auth::user()){
+            $user = User::where('id',$id)->first();
+            dd($user->toArray());
+        }else{
+            return redirect('/');
+        }
     }
 }

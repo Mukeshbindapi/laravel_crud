@@ -10,22 +10,35 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+    // public function ManualLogin(Request $request){
+    //     $email = $request->email;
+    //     $password = $request->password;
+    //     $user = User::where('email',$email)->first();
+
+    //     if($user){
+
+    //         $hashedPassword = $user->password;
+    //         if(Hash::check($password,$hashedPassword)){
+    //             Auth::login($user);
+    //             return redirect('user/list');
+    //         }else{
+    //             dd('Password Not Match');
+    //         }
+    //     }else{
+    //         dd('user not found');
+    //     }
+    // }
+
     public function login(Request $request){
         $email = $request->email;
         $password = $request->password;
-        $user = User::where('email',$email)->first();
 
-        if($user){
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            $request->session()->regenerate();
 
-            $hashedPassword = $user->password;
-            if(Hash::check($password,$hashedPassword)){
-                Auth::login($user);
-                return redirect('user/list');
-            }else{
-                dd('Password Not Match');
-            }
+            return redirect('user/list');
         }else{
-            dd('user not found');
+            dd('Credential not match');
         }
     }
 }
