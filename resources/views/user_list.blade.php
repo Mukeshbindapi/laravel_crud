@@ -10,6 +10,7 @@
 <body>
 
     <div class="container mt-5">
+        <a href="{{ url('logout') }}" class="btn btn-primary m-2" style="float: right">Logout</a>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr>

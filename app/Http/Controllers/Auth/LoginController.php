@@ -32,13 +32,16 @@ class LoginController extends Controller
     public function login(Request $request){
         $email = $request->email;
         $password = $request->password;
-
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $request->session()->regenerate();
-
-            return redirect('user/list');
+            return redirect()->intended('user/list');
         }else{
             dd('Credential not match');
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect('/');
     }
 }
